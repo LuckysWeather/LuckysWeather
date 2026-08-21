@@ -1,4 +1,104 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lucky's Weather</title><meta name="description" content="Live weather coverage, outlooks, radar, and forecast models."><link rel="stylesheet" href="style.css"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lucky's Weather</title><meta name="description" content="Live weather coverage, outlooks, radar, and forecast models."><link rel="stylesheet" href="style.css"><style>
+.nws-alert-bar{position:relative;z-index:30;display:flex;align-items:stretch;min-height:48px;overflow:hidden;border-bottom:1px solid #29495d;background:#06131d;color:#fff}
+.nws-alert-label{position:relative;z-index:2;display:flex;flex:0 0 auto;align-items:center;gap:8px;padding:0 16px;background:#d71920;font-size:.74rem;font-weight:900;letter-spacing:.12em;white-space:nowrap;box-shadow:10px 0 24px rgba(0,0,0,.28)}
+.nws-alert-label span{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:nwsPulse 1.2s ease-in-out infinite}
+.nws-alert-viewport{display:flex;flex:1;align-items:center;min-width:0;overflow:hidden}
+.nws-alert-track{display:flex;width:max-content;align-items:center;white-space:nowrap;animation:nwsScroll var(--ticker-duration,120s) linear infinite}
+.nws-alert-bar:hover .nws-alert-track{animation-play-state:paused}
+.nws-alert-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;color:#eef8ff;text-decoration:none;font-size:.86rem;font-weight:700}
+.nws-alert-item:hover{color:#6ed8ff}
+.nws-alert-item::before{content:"";width:9px;height:9px;border-radius:50%;background:#55c7ef;box-shadow:0 0 10px rgba(85,199,239,.75)}
+.nws-alert-item.tornado::before{background:#ff2b35;box-shadow:0 0 12px #ff2b35}
+.nws-alert-item.severe::before{background:#ff8c20;box-shadow:0 0 12px #ff8c20}
+.nws-alert-item.watch::before{background:#ffd43b;box-shadow:0 0 12px #ffd43b}
+.nws-alert-separator{color:#426074}
+.nws-alert-status{padding:0 18px;color:#9bb5c5;font-size:.82rem;white-space:nowrap}
+@keyframes nwsScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes nwsPulse{50%{opacity:.35;transform:scale(.72)}}
+@media (prefers-reduced-motion:reduce){.nws-alert-track{animation:none;overflow-x:auto}.nws-alert-viewport{overflow-x:auto}}
+@media (max-width:700px){.nws-alert-label{padding:0 10px;font-size:.65rem}.nws-alert-item{padding:0 16px;font-size:.78rem}}
+</style></head><body><section class="nws-alert-bar" aria-label="Current National Weather Service alerts"><div class="nws-alert-label"><span></span>NWS ALERTS</div><div class="nws-alert-viewport" id="nws-alert-viewport"><div class="nws-alert-status">Loading current watches, warnings, and advisories…</div></div></section>
 <header class="site-header"><div class="shell nav"><a class="brand" href="index.html"><span class="mark">L</span><span>LUCKY'S<small>WEATHER</small></span></a><nav class="links"><a href="index.html">Home</a><a href="forecast.html">Forecast</a><a href="radar.html">Radar & Models</a><a href="videos.html">Videos</a><a href="subcount.html">Sub Count</a><a href="socials.html">Socials</a><a href="about.html">About</a><a href="merch.html">Merch</a></nav><a class="youtube" href="https://youtube.com/@luckysweather" target="_blank"><span class="pulse"></span>YouTube</a></div></header>
 <main><section class="shell hero"><div><div class="eyebrow"><span class="pulse"></span>LIVE WEATHER INTELLIGENCE</div><h1>Weather made clear.<br><span>Before it matters.</span></h1><p class="lead">Live severe-weather coverage, honest forecasting, and the tools you need to stay ahead of the storm.</p><div class="actions"><a class="button primary" href="https://youtube.com/@luckysweather" target="_blank">Watch on YouTube ↗</a><a class="button secondary" href="forecast.html">View today's outlook</a></div></div><div class="radar"><div class="sweep"></div><div class="orb"><small>COVERAGE MODE</small><strong>STANDBY</strong><small>Next briefing posted soon</small></div></div></section><section class="ticker"><div class="shell ticker-in"><span class="tag">WATCH</span><b>Severe weather monitoring</b><span>Official NOAA outlooks update at the source.</span><a href="forecast.html" style="color:var(--cyan)">Open Forecast Center →</a></div></section><section class="shell section"><span class="kicker">THE WEATHER DESK</span><h2>Everything you need, in one place.</h2><div class="grid3"><a class="card" href="forecast.html"><small>UPDATED DAILY</small><h3>SPC Severe Outlook</h3><p>See today's official severe-weather risk areas and what each threat level means.</p><span class="go">View outlook →</span></a><a class="card" href="radar.html"><small>WEATHER TOOLS</small><h3>Live Radar & Models</h3><p>Radar, satellite, and model links organized into one clean workspace.</p><span class="go">Open tools →</span></a><a class="card" href="forecast.html#tropics"><small>ATLANTIC & PACIFIC</small><h3>Hurricane Center</h3><p>Official NHC outlooks that update whenever new products are published.</p><span class="go">Track tropics →</span></a></div></section></main>
-<footer><div class="shell footer"><div class="brand"><span class="mark">L</span><span>LUCKY'S<small>WEATHER</small></span></div><span>Always follow official local emergency guidance.</span></div></footer></body></html>
+<footer><div class="shell footer"><div class="brand"><span class="mark">L</span><span>LUCKY'S<small>WEATHER</small></span></div><span>Always follow official local emergency guidance.</span></div></footer><script>
+(function () {
+  const endpoint = 'https://api.weather.gov/alerts/active';
+  const viewport = document.getElementById('nws-alert-viewport');
+  const severityOrder = { Extreme: 0, Severe: 1, Moderate: 2, Minor: 3, Unknown: 4 };
+
+  function alertClass(eventName) {
+    const name = (eventName || '').toLowerCase();
+    if (name.includes('tornado warning')) return 'tornado';
+    if (name.includes('severe thunderstorm warning')) return 'severe';
+    if (name.includes('watch')) return 'watch';
+    return '';
+  }
+
+  function makeAlertItem(feature) {
+    const props = feature.properties || {};
+    const link = document.createElement('a');
+    const eventName = props.event || 'Weather Alert';
+    const area = props.areaDesc || 'See official alert for affected area';
+    link.className = 'nws-alert-item ' + alertClass(eventName);
+    link.href = typeof feature.id === 'string' && feature.id.startsWith('https://api.weather.gov/alerts/')
+      ? feature.id
+      : 'https://www.weather.gov/';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = eventName + ' — ' + area;
+    link.title = 'Open official National Weather Service alert';
+    return link;
+  }
+
+  function renderAlerts(features) {
+    if (!features.length) {
+      viewport.innerHTML = '<div class="nws-alert-status">No active National Weather Service alerts at this time.</div>';
+      return;
+    }
+
+    features.sort(function (a, b) {
+      const aRank = severityOrder[(a.properties || {}).severity] ?? 4;
+      const bRank = severityOrder[(b.properties || {}).severity] ?? 4;
+      return aRank - bRank;
+    });
+
+    const group = document.createDocumentFragment();
+    features.forEach(function (feature, index) {
+      group.appendChild(makeAlertItem(feature));
+      const separator = document.createElement('span');
+      separator.className = 'nws-alert-separator';
+      separator.textContent = '◆';
+      group.appendChild(separator);
+    });
+
+    const track = document.createElement('div');
+    track.className = 'nws-alert-track';
+    const firstSet = document.createElement('div');
+    firstSet.style.display = 'flex';
+    firstSet.style.alignItems = 'center';
+    firstSet.appendChild(group);
+    const secondSet = firstSet.cloneNode(true);
+    secondSet.setAttribute('aria-hidden', 'true');
+    track.append(firstSet, secondSet);
+    track.style.setProperty('--ticker-duration', Math.min(360, Math.max(55, features.length * 4)) + 's');
+    viewport.replaceChildren(track);
+  }
+
+  async function updateAlerts() {
+    try {
+      const response = await fetch(endpoint, {
+        headers: { Accept: 'application/geo+json' },
+        cache: 'no-store'
+      });
+      if (!response.ok) throw new Error('NWS returned ' + response.status);
+      const data = await response.json();
+      renderAlerts(Array.isArray(data.features) ? data.features : []);
+    } catch (error) {
+      viewport.innerHTML = '<div class="nws-alert-status">Official NWS alerts are temporarily unavailable. Retrying automatically…</div>';
+    }
+  }
+
+  updateAlerts();
+  setInterval(updateAlerts, 60000);
+}());
+</script></body></html>
