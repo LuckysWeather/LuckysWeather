@@ -26,22 +26,18 @@
       letter-spacing: .18em;
     }
     .live-number-window {
-      position: relative;
-      width: 300px;
-      height: 120px;
+      width: min(100%, 420px);
+      height: 170px;
       margin: 0 auto;
       overflow: hidden;
+      border-radius: 12px;
       background: #07131d;
     }
     .live-number-window iframe {
-      position: absolute;
-      top: -96px;
-      left: calc(50% - 542px);
-      width: 600px;
-      height: 100px;
+      display: block;
+      width: 100%;
+      height: 170px;
       border: 0;
-      transform: scale(3);
-      transform-origin: top left;
       background: #07131d;
     }
     .live-number-name {
@@ -58,7 +54,8 @@
     }
     @media (max-width: 420px) {
       .live-number-card { padding-inline: 8px; }
-      .live-number-window { width: 260px; }
+      .live-number-window { height: 140px; }
+      .live-number-window iframe { height: 140px; }
     }
   </style>
 </head>
@@ -71,7 +68,7 @@
       <span class="live-number-label">LIVE YOUTUBE SUBSCRIBERS</span>
       <div class="live-number-window">
         <iframe
-          src="https://socialcounts.org/youtube-live-subscriber-count/UC0JtS_d-9CBAUY1BLZmMtpA/embed"
+          src="https://socialcounts.org/youtube-live-subscriber-count/UC0JtS_d-9CBAUY1BLZmMtpA/embed?fullscreen=true&amp;counter=1"
           title="Lucky's Weather live YouTube subscriber count"
           loading="eager">
         </iframe>
