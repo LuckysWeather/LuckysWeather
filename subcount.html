@@ -5,23 +5,80 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Live Subscriber Count | Lucky's Weather</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .live-number-card {
+      width: min(100%, 560px);
+      margin: 0 auto 28px;
+      padding: 34px 20px 30px;
+      overflow: hidden;
+      text-align: center;
+      border: 1px solid #21465d;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #07131d, #0b2130);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+    }
+    .live-number-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #6ed8ff;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+    .live-number-window {
+      position: relative;
+      width: 300px;
+      height: 120px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #07131d;
+    }
+    .live-number-window iframe {
+      position: absolute;
+      top: -96px;
+      left: calc(50% - 542px);
+      width: 600px;
+      height: 100px;
+      border: 0;
+      transform: scale(3);
+      transform-origin: top left;
+      background: #07131d;
+    }
+    .live-number-name {
+      margin: 10px 0 0;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 750;
+    }
+    .live-number-note {
+      max-width: 560px;
+      margin: 0 auto 26px;
+      text-align: center;
+      color: #9bb5c5;
+    }
+    @media (max-width: 420px) {
+      .live-number-card { padding-inline: 8px; }
+      .live-number-window { width: 260px; }
+    }
+  </style>
 </head>
 <body>
 <header class="site-header"><div class="shell nav"><a class="brand" href="index.html"><span class="mark">L</span><span>LUCKY'S<small>WEATHER</small></span></a><nav class="links"><a href="index.html">Home</a><a href="forecast.html">Forecast</a><a href="radar.html">Radar & Models</a><a href="videos.html">Videos</a><a href="subcount.html">Sub Count</a><a href="socials.html">Socials</a><a href="about.html">About</a><a href="merch.html">Merch</a></nav><a class="youtube" href="https://youtube.com/@luckysweather"><span class="pulse"></span>YouTube</a></div></header>
 <main>
-  <section class="shell page-hero" style="text-align:center"><span class="kicker">LIVE CHANNEL GROWTH</span><h1>Subscriber Count</h1><p>Follow the Lucky's Weather community as it grows.</p></section>
+  <section class="shell page-hero" style="text-align:center"><span class="kicker">LIVE CHANNEL GROWTH</span><h1>Subscriber Count</h1><p>Watch the Lucky's Weather community grow in real time.</p></section>
   <section class="shell counter">
-    <span class="pulse"></span>
-    <small>LIVE COUNT</small>
-    <strong>Lucky's Weather</strong>
-    <iframe
-      style="width:100%;height:460px;border:1px solid #21465d;border-radius:12px;margin-bottom:30px;background:#07131d"
-      src="https://socialcounts.org/youtube-live-subscriber-count/UC0JtS_d-9CBAUY1BLZmMtpA/embed"
-      title="Lucky's Weather live YouTube subscriber count"
-      loading="eager"
-      allowfullscreen>
-    </iframe>
-    <p>Live data refreshes automatically through SocialCounts using the permanent Lucky's Weather YouTube channel ID.</p>
+    <div class="live-number-card">
+      <span class="live-number-label">LIVE YOUTUBE SUBSCRIBERS</span>
+      <div class="live-number-window">
+        <iframe
+          src="https://socialcounts.org/youtube-live-subscriber-count/UC0JtS_d-9CBAUY1BLZmMtpA/embed"
+          title="Lucky's Weather live YouTube subscriber count"
+          loading="eager">
+        </iframe>
+      </div>
+      <p class="live-number-name">Lucky's Weather</p>
+    </div>
+    <p class="live-number-note">The large number updates automatically using live public data from SocialCounts.</p>
     <a class="button primary" href="https://socialcounts.org/youtube-live-subscriber-count/UC0JtS_d-9CBAUY1BLZmMtpA" target="_blank" rel="noopener noreferrer">Open full-screen counter ↗</a>
   </section>
 </main>
