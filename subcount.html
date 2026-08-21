@@ -27,7 +27,7 @@
     }
     .live-number-window {
       width: min(100%, 420px);
-      height: 170px;
+      height: 190px;
       margin: 0 auto;
       overflow: hidden;
       border-radius: 12px;
@@ -35,12 +35,13 @@
     }
     .live-number-window iframe {
       display: block;
-      width: 66.667%;
-      height: 113.33px;
+      width: 44.444%;
+      height: 84.44px;
       border: 0;
-      transform: scale(1.5);
+      transform: scale(2.25);
       transform-origin: top left;
-      background: #07131d;
+      filter: invert(1) hue-rotate(180deg);
+      background: #f8fbfd;
     }
     .live-number-name {
       margin: 10px 0 0;
@@ -56,8 +57,8 @@
     }
     @media (max-width: 420px) {
       .live-number-card { padding-inline: 8px; }
-      .live-number-window { height: 140px; }
-      .live-number-window iframe { height: 93.33px; }
+      .live-number-window { height: 160px; }
+      .live-number-window iframe { height: 71.11px; }
     }
   </style>
 </head>
