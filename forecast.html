@@ -14,7 +14,7 @@
     <article class="data">
       <h2>SPC Day 1 Convective Outlook</h2>
       <a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html" target="_blank" rel="noopener noreferrer">
-        <img id="spc-day1" referrerpolicy="no-referrer" src="https://www.spc.noaa.gov/products/outlook/day1otlk.gif" alt="Current SPC Day 1 outlook">
+        <img id="spc-day1" referrerpolicy="no-referrer" src="https://www.spc.noaa.gov/products/outlook/day1otlk.png" alt="Current SPC Day 1 outlook">
       </a>
       <p id="spc-status">Official NOAA/SPC product. The graphic refreshes automatically every 10 minutes.</p>
       <p><a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html" target="_blank" rel="noopener noreferrer">Open the latest outlook directly on the SPC website ↗</a></p>
@@ -27,7 +27,7 @@
 (function () {
   const image = document.getElementById('spc-day1');
   const status = document.getElementById('spc-status');
-  const source = 'https://www.spc.noaa.gov/products/outlook/day1otlk.gif';
+  const source = 'https://www.spc.noaa.gov/products/outlook/day1otlk.png';
 
   function refreshOutlook() {
     status.textContent = 'Checking for the latest official NOAA/SPC outlook…';
