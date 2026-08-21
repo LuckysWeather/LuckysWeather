@@ -3,7 +3,7 @@
 .nws-alert-label{position:relative;z-index:2;display:flex;flex:0 0 auto;align-items:center;gap:8px;padding:0 16px;background:#d71920;font-size:.74rem;font-weight:900;letter-spacing:.12em;white-space:nowrap;box-shadow:10px 0 24px rgba(0,0,0,.28)}
 .nws-alert-label span{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:nwsPulse 1.2s ease-in-out infinite}
 .nws-alert-viewport{display:flex;flex:1;align-items:center;min-width:0;overflow:hidden}
-.nws-alert-track{display:flex;width:max-content;align-items:center;white-space:nowrap;animation:nwsScroll var(--ticker-duration,120s) linear infinite}
+.nws-alert-track{display:flex;width:max-content;align-items:center;white-space:nowrap;animation:nwsScroll var(--ticker-duration,240s) linear infinite}
 .nws-alert-bar:hover .nws-alert-track{animation-play-state:paused}
 .nws-alert-item{display:inline-flex;align-items:center;gap:8px;padding:0 24px;color:#eef8ff;text-decoration:none;font-size:.86rem;font-weight:700}
 .nws-alert-item:hover{color:#6ed8ff}
@@ -80,7 +80,7 @@
     const secondSet = firstSet.cloneNode(true);
     secondSet.setAttribute('aria-hidden', 'true');
     track.append(firstSet, secondSet);
-    track.style.setProperty('--ticker-duration', Math.min(360, Math.max(55, features.length * 4)) + 's');
+    track.style.setProperty('--ticker-duration', Math.min(720, Math.max(110, features.length * 8)) + 's');
     viewport.replaceChildren(track);
   }
 
