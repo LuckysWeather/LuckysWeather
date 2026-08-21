@@ -80,7 +80,7 @@
     const secondSet = firstSet.cloneNode(true);
     secondSet.setAttribute('aria-hidden', 'true');
     track.append(firstSet, secondSet);
-    track.style.setProperty('--ticker-duration', Math.min(800, Math.max(110, features.length * 8)) + 's');
+    track.style.setProperty('--ticker-duration', Math.min(1000, Math.max(110, features.length * 8)) + 's');
     viewport.replaceChildren(track);
   }
 
